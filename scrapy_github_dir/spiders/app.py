@@ -7,7 +7,11 @@ class AppSpider(scrapy.Spider):
     name = 'app'
     allowed_domains = ['github.com']
     content_domains = 'https://github.com/'
-    start_urls = ['https://github.com/ditclear/BindingListAdapter']
+    start_urls = []
+
+    def __init__(self, url=None, *args, **kwargs):
+        super(AppSpider, self).__init__(*args, **kwargs)
+        self.start_urls = [url]
 
     def parse(self, response):
         list = response.css('a#raw-url').xpath('@href').extract()
