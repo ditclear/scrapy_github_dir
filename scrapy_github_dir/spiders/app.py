@@ -9,9 +9,9 @@ class AppSpider(scrapy.Spider):
     content_domains = 'https://github.com/'
     start_urls = []
 
-    def __init__(self, url=None, *args, **kwargs):
+    def __init__(self, urls=None, *args, **kwargs):
         super(AppSpider, self).__init__(*args, **kwargs)
-        self.start_urls = [url]
+        self.start_urls = urls.split(',')
 
     def parse(self, response):
         list = response.css('a#raw-url').xpath('@href').extract()
