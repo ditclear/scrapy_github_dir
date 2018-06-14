@@ -14,10 +14,9 @@ class AppSpider(scrapy.Spider):
         self.start_urls = urls.split(',')
 
     def parse(self, response):
-        list = response.css('a#raw-url').xpath('@href').extract()
-        if list:
-            for href in list:
-                href = self.content_domains+href
+        raw_url = response.css('a#raw-url').xpath('@href').extract_first()
+        if raw_url:
+                href = self.content_domains+raw_url
                 print("scrapy from href --> ", href)
                 yield scrapy.Request(href, callback=self.parse_link)
         else:
